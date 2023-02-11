@@ -1,0 +1,29 @@
+package com.cybersoft.DemoJPA.controller;
+
+import com.cybersoft.DemoJPA.dto.UsersDTO;
+import com.cybersoft.DemoJPA.entity.Users;
+import com.cybersoft.DemoJPA.payload.LoginRequest;
+import com.cybersoft.DemoJPA.payload.UsersRequest;
+import com.cybersoft.DemoJPA.service.Imp.UsersService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping("/users")
+public class UsersController {
+    @Autowired
+    UsersService usersService;
+
+    @PostMapping ("/add")
+    public ResponseEntity<?> addUsers(@RequestBody UsersRequest usersRequest) {
+        return new ResponseEntity<>(usersService.addUsers(usersRequest), HttpStatus.OK);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest){
+        Users user = usersService.getUsersByEmailAndPassword(loginRequest.getEmail(), loginRequest.getPassword());
+        return new ResponseEntity<>(user != null, HttpStatus.OK);
+    }
+}
