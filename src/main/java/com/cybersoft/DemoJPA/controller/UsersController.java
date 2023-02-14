@@ -3,7 +3,6 @@ package com.cybersoft.DemoJPA.controller;
 import com.cybersoft.DemoJPA.dto.UsersDTO;
 import com.cybersoft.DemoJPA.entity.Users;
 import com.cybersoft.DemoJPA.payload.LoginRequest;
-import com.cybersoft.DemoJPA.payload.UsersRequest;
 import com.cybersoft.DemoJPA.service.Imp.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,8 +16,8 @@ public class UsersController {
     UsersService usersService;
 
     @PostMapping ("/add")
-    public ResponseEntity<?> addUsers(@RequestBody UsersRequest usersRequest) {
-        return new ResponseEntity<>(usersService.addUsers(usersRequest), HttpStatus.OK);
+    public ResponseEntity<?> addUsers(@RequestBody UsersDTO usersDTO) {
+        return new ResponseEntity<>(usersService.addUsers(usersDTO), HttpStatus.OK);
     }
 
     @PostMapping("/login")

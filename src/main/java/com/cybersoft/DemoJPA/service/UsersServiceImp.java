@@ -3,8 +3,6 @@ package com.cybersoft.DemoJPA.service;
 import com.cybersoft.DemoJPA.dto.UsersDTO;
 import com.cybersoft.DemoJPA.entity.Roles;
 import com.cybersoft.DemoJPA.entity.Users;
-import com.cybersoft.DemoJPA.payload.UsersRequest;
-import com.cybersoft.DemoJPA.payload.UsersResponse;
 import com.cybersoft.DemoJPA.repository.RolesRepository;
 import com.cybersoft.DemoJPA.repository.UsersRepository;
 import com.cybersoft.DemoJPA.service.Imp.UsersService;
@@ -20,26 +18,23 @@ public class UsersServiceImp implements UsersService {
     RolesRepository rolesRepository;
 
     @Override
-    public UsersResponse addUsers(UsersRequest usersRequest) {
+    public boolean addUsers(UsersDTO usersDTO) {
         Users users = new Users();
-//        users.setId(usersRequest.getId());
-        users.setAvatar(usersRequest.getAvatar());
-        users.setEmail(usersRequest.getEmail());
-        users.setFullname(usersRequest.getFullname());
-        users.setPassword(usersRequest.getPassword());
+        Roles role = new Roles();
+        role.setId(usersDTO.getRoleId());
 
-        Roles role = rolesRepository.findByName("ROLE_USER");
+        users.setAvatar(usersDTO.getAvatar());
+        users.setEmail(usersDTO.getEmail());
+        users.setFullname(usersDTO.getFullname());
+        users.setPassword(usersDTO.getPassword());
         users.setRoles(role);
-        Users savedUser = usersRepository.save(users);
 
-        UsersResponse usersResponse = new UsersResponse(
-                savedUser.getId(),
-                savedUser.getEmail(),
-                savedUser.getFullname(),
-                savedUser.getAvatar(),
-                savedUser.getRoles().getId());
-
-        return usersResponse;
+        try {
+            usersRepository.save(users);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     @Override

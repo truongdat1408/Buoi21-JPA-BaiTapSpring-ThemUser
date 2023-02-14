@@ -1,7 +1,6 @@
 package com.cybersoft.DemoJPA.dto;
 
 public class UsersDTO {
-    private int id;
 
     private String email;
 
@@ -19,14 +18,6 @@ public class UsersDTO {
 
     public void setRoleId(int roleId) {
         this.roleId = roleId;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getEmail() {
